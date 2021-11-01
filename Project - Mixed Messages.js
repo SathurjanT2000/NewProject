@@ -87,7 +87,7 @@ const astrology = [
 
 const dayAndMonthReturn = (inputDay) => {//gets month and day from the input
     if (typeof(inputDay) === 'string') {
-        inputDate = new Date(inputDay);
+        inputDay = new Date(inputDay);
     };
     let inputDayArray = [inputDay.getMonth()+1, inputDay.getDate()];
     return inputDayArray;
@@ -190,5 +190,5 @@ const randomAstrologyFacts = (birthDate) => {
         };
     };
 };
-console.log(randomAstrologyFacts());
+console.log(randomAstrologyFacts('2000/03/06'));
 
