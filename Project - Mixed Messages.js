@@ -85,38 +85,38 @@ const astrology = [
     }
 ];
 
-const dateAndMonthReturn = (inputDate) => {
-    if (typeof(inputDate) === 'string') {
-        inputDate = new Date(inputDate);
+const dayAndMonthReturn = (inputDay) => {//gets month and day from the input
+    if (typeof(inputDay) === 'string') {
+        inputDate = new Date(inputDay);
     };
-    let inputDateArray = [inputDate.getMonth()+1, inputDate.getDate()];
-    return inputDateArray;
+    let inputDayArray = [inputDay.getMonth()+1, inputDay.getDate()];
+    return inputDayArray;
 };
 
-const dateInWordReturn = (input) => {
-    let set = [(dateAndMonthReturn(astrology[input].startDate))[1],  (dateAndMonthReturn(astrology[input].endDate))[1]];
-    let dateInWord = []
+const dayInWordReturn = (input) => {//returns Day in word
+    let set = [(dayAndMonthReturn(astrology[input].startDate))[1],  (dayAndMonthReturn(astrology[input].endDate))[1]];
+    let dayInWord = []
     for (let element of set) {
         switch (element%10) {
             case 1:
-                dateInWord.push(element + 'st');
+                dayInWord.push(element + 'st');
                 break;
             case 2:
-                dateInWord.push(element + 'nd');
+                dayInWord.push(element + 'nd');
                 break;
             case 3:
-                dateInWord.push(element + 'rd');
+                dayInWord.push(element + 'rd');
                 break;
             default:
-                dateInWord.push(element + 'th');
+                dayInWord.push(element + 'th');
                 break;
         }
     };
-    return dateInWord;
+    return dayInWord;
 }
 
-const monthInWordReturn = (input) => {
-    let group = [(dateAndMonthReturn(astrology[input].startDate))[0],  (dateAndMonthReturn(astrology[input].endDate))[0]];
+const monthInWordReturn = (input) => {//return month in word
+    let group = [(dayAndMonthReturn(astrology[input].startDate))[0],  (dayAndMonthReturn(astrology[input].endDate))[0]];
     let monthInWord = [];
     for (const element of group) {
         switch (element) {
@@ -161,8 +161,8 @@ const monthInWordReturn = (input) => {
     return monthInWord;
 }
 
-const joinDate = (input) => {
-    return dateInWordReturn(input)[0] + ' of ' + monthInWordReturn(input)[0] + ' and ' + dateInWordReturn(input)[1] + ' of ' + monthInWordReturn(input)[1];
+const joinDay = (input) => {//combines day and month and return date in word
+    return dayInWordReturn(input)[0] + ' of ' + monthInWordReturn(input)[0] + ' and ' + dayInWordReturn(input)[1] + ' of ' + monthInWordReturn(input)[1];
 }
 
 const randomNumber = Math.floor(Math.random()*astrology.length);
@@ -173,7 +173,7 @@ const randomAstrologyFacts = (birthDate) => {
     if (birthDate === undefined) {
         for (let i = 0; i < astrology.length; i++) { // useing for loop to shorten the if statements
             if (randomNumber === i) {
-                return `If you were born between ${joinDate(i)}. Your astrological sign is ${astrology[i].sign}. Your astrological stone is ${astrology[i].stone}. The meaning associated with ${astrology[i].sign} is ${astrology[i].meaning}`;
+                return `If you were born between ${joinDay(i)}. Your astrological sign is ${astrology[i].sign}. Your astrological stone is ${astrology[i].stone}. The meaning associated with ${astrology[i].sign} is ${astrology[i].meaning}`;
             }
         };
         //response for inorrect input, using Date.parse method, input is changed to milliseconds passed since midnight 1st jan 1970, if the input is incorrect, the method will return 0.
@@ -181,11 +181,11 @@ const randomAstrologyFacts = (birthDate) => {
         console.log("please enter a correct date in the format of 'YYYY/MM/DD'");
         //response for correct input, using if statement to check where the input is located within the astrology array
     } else {
-        birthDate = dateAndMonthReturn(birthDate);
+        birthDate = dayAndMonthReturn(birthDate);
         birthDate.unshift(2021); //for comparison during the if stage, the year is changed.
         for (let j = 0; j < astrology.length; j++) { //using for loop to shorten the if statments
             if ((Date.parse(birthDate) >= astrology[j].startDate.getTime()) && (Date.parse(birthDate) <= astrology[j].endDate.getTime())) {
-                return `Your astrological sign is ${astrology[j].sign}. Your astrological stone is ${astrology[j].stone}. The meaning associated with ${astrology[j].sign} is ${astrology[j].meaning}. People born between ${joinDate(j)} will have the same astrological sign as yours!`;
+                return `Your astrological sign is ${astrology[j].sign}. Your astrological stone is ${astrology[j].stone}. The meaning associated with ${astrology[j].sign} is ${astrology[j].meaning}. People born between ${joinDay(j)} will have the same astrological sign as yours!`;
             }
         };
     };
