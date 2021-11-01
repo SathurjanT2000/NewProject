@@ -97,40 +97,29 @@ const astrology = [
     }
 ]
 
+const randomNumber = Math.floor(Math.random()*astrology.length);
+
 const randomAstrologyFacts = (birthDate) => {
+    /*response for no input:
+    using a random number generator, the if statment genrates a random fact */
     if (birthDate === undefined) {
-        const randomNumber = Math.floor(Math.random()*astrology.length);
-        /*console.log(randomNumber);
-        console.log(astrology[1].dates)*/
-        let sign1 = undefined;
-        let dates1 = undefined;
-        let stone1 = undefined;
-        let meaning1 = undefined;
-        for (let i = 0; i < astrology.length; i++) {
+        for (let i = 0; i < astrology.length; i++) { // useing for loop to shorten the if statements
             if (randomNumber === i) {
-                /*console.log(i);
-                console.log(astrology[i].dates);*/
-                sign1 = astrology[i].sign;
-                dates1 = astrology[i].dates;
-                stone1 = astrology[i].stone;
-                meaning1 = astrology[i].meaning;
-                //console.log(date1);
+                console.log(`If you were born between ${astrology[i].dates}. Your astrological sign is ${astrology[i].dates}. Your astrological stone is ${astrology[i].stone}. The meaning associated with ${astrology[i].sign} is ${astrology[i].meaning}`);
             }
         }
-        console.log(`If you were born between ${dates1}. Your astrological sign is ${sign1}. Your astrological stone is ${stone1}. The meaning associated with ${sign1} is ${meaning1}`);
+        //response for inorrect input, using Date.parse method, input is changed to milliseconds passed since midnight 1st jan 1970, if the input is incorrect, the method will return 0.
     } else if (Date.parse(birthDate) === 0) {
-        console.log("please enter a correct date, e.g. '2021,11,01")
+        console.log("please enter a correct date in the format of 'YYYY,MM,DD'")
+        //response for correct input, using if statement to check where the input is located within the astrology array
     } else {
-        for (let j = 0; j < astrology.length; j++) {
+        for (let j = 0; j < astrology.length; j++) { //using for loop to shorten the if statments
             if ((Date.parse(birthDate) >= astrology[j].startDate.getTime()) && (Date.parse(birthDate) <= astrology[j].endDate.getTime())) {
                 console.log(`Your astrological sign is ${astrology[j].sign}. Your astrological stone is ${astrology[j].stone}. The meaning associated with ${astrology[j].sign} is ${astrology[j].meaning}. People born between ${astrology[j].dates} will have the same astrological sign as yours!`)
             }
         }
     }
 }
-randomAstrologyFacts('2021,03,06');
-//console.log(astrology[0].startDate)
-//console.log(new Date(2021,00,21))
-//randomAstrologyFacts();
-//randomAstrologyFacts();
-//console.log(astrology[0].dates);
+console.log(astrology[0].startDate)
+let test = new Date('2019,06,12').toLocaleString()
+console.log(test.split('/'));
