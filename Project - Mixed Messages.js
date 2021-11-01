@@ -3,7 +3,6 @@ const astrology = [
         sign: 'Aquarius',
         startDate: new Date('2021,01,21'),
         endDate: new Date('2021,02,19'),
-        dates: 'Jan 21st and Feb 19th',
         stone: 'Garnet',
         meaning: 'vitality and passion'
     },
@@ -11,7 +10,6 @@ const astrology = [
         sign: 'Pisces',
         startDate: new Date('2021,02,20'),
         endDate: new Date('2021,03,20'),
-        dates: 'Feb 20th and Mar 20th',
         stone: 'Amethyst',
         meaning: 'calm and rejuvenation'
     },
@@ -19,7 +17,6 @@ const astrology = [
         sign: 'Aries',
         startDate: new Date('2021,03,21'),
         endDate: new Date('2021,04,20'),
-        dates: 'Mar 21st and Apr 20th',
         stone: 'Bloodstone',
         meaning: 'action and vitality'
     },
@@ -27,7 +24,6 @@ const astrology = [
         sign: 'Taurus',
         startDate: new Date('2021,04,21'),
         endDate: new Date('2021,05,21'),
-        dates: 'Apr 21st and May 21st',
         stone: 'Sapphire',
         meaning: 'self-expression and truth'
     },
@@ -35,7 +31,6 @@ const astrology = [
         sign: 'Gemini',
         startDate: new Date('2021,05,22'),
         endDate: new Date('2021,06,21'),
-        dates: 'May 22nd and Jun 21st',
         stone: 'Agate',
         meaning: 'balance and stability'
     },
@@ -43,7 +38,6 @@ const astrology = [
         sign: 'Cancer',
         startDate: new Date('2021,06,22'),
         endDate: new Date('2021,07,22'),
-        dates: 'Jun 22nd and Jul 22nd',
         stone: 'Emerald',
         meaning: 'love and kindness'
     },
@@ -51,7 +45,6 @@ const astrology = [
         sign: 'Leo',
         startDate: new Date('2021,07,23'),
         endDate: new Date('2021,08,22'),
-        dates: 'Jul 23rd and Aug 22nd',
         stone: 'Onyx',
         meaning: 'strength and calm'
     },
@@ -59,7 +52,6 @@ const astrology = [
         sign: 'Virgo',
         startDate: new Date('2021,08,23'),
         endDate: new Date('2021,09,23'),
-        dates: 'Aug 23rd and Sep 23rd',
         stone: 'Carnelian',
         meaning: 'confidence and passion'
     },
@@ -67,7 +59,6 @@ const astrology = [
         sign: 'Libra',
         startDate: new Date('2021,09,24'),
         endDate: new Date('2021,10,23'),
-        dates: 'Sep 24th and Oct 23rd',
         stone: 'Peridot',
         meaning: 'radiance and purpose'
     },
@@ -75,7 +66,6 @@ const astrology = [
         sign: 'scorpio',
         startDate: new Date('2021,10,24'),
         endDate: new Date('2021,11,22'),
-        dates: 'Oct 24th and Nov 22nd',
         stone: 'Topaz',
         meaning: 'strength and intelligence'
     },
@@ -83,7 +73,6 @@ const astrology = [
         sign: 'sagittarius',
         startDate: new Date('2021,11,23'),
         endDate: new Date('2021,12,21'),
-        dates: 'Nov 23rd and Dec 21st',
         stone: 'Turquoise',
         meaning: 'wellbeing and good fortune'
     },
@@ -91,11 +80,90 @@ const astrology = [
         sign: 'Capricorn',
         startDate: new Date('2021,12,22'),
         endDate: new Date('2021,01,20'),
-        dates: 'Dec 22nd and Jan 20th',
         stone: 'Ruby',
         meaning: 'protection and vitality'
     }
-]
+];
+
+const dateAndMonthReturn = (inputDate) => {
+    if (typeof(inputDate) === 'string') {
+        inputDate = new Date(inputDate);
+    };
+    let inputDateArray = [inputDate.getMonth()+1, inputDate.getDate()];
+    return inputDateArray;
+};
+
+const dateInWordReturn = (input) => {
+    let set = [(dateAndMonthReturn(astrology[input].startDate))[1],  (dateAndMonthReturn(astrology[input].endDate))[1]];
+    let dateInWord = []
+    for (let element of set) {
+        switch (element%10) {
+            case 1:
+                dateInWord.push(element + 'st');
+                break;
+            case 2:
+                dateInWord.push(element + 'nd');
+                break;
+            case 3:
+                dateInWord.push(element + 'rd');
+                break;
+            default:
+                dateInWord.push(element + 'th');
+                break;
+        }
+    };
+    return dateInWord;
+}
+
+const monthInWordReturn = (input) => {
+    let group = [(dateAndMonthReturn(astrology[input].startDate))[0],  (dateAndMonthReturn(astrology[input].endDate))[0]];
+    let monthInWord = [];
+    for (const element of group) {
+        switch (element) {
+            case 1:
+                monthInWord.push('Jan');
+                break;
+            case 2:
+                monthInWord.push('Feb');
+                break;
+            case 3:
+                monthInWord.push('Mar');
+                break;
+            case 4:
+                monthInWord.push('Apr');
+                break;
+            case 5:
+                monthInWord.push('May');
+                break;
+            case 6:
+                monthInWord.push('Jun');
+                break;
+            case 7:
+                monthInWord.push('Jul');
+                break;
+            case 8:
+                monthInWord.push('Aug');
+                break;
+            case 9:
+                monthInWord.push('Sep');
+                break;
+            case 10:
+                monthInWord.push('Oct');
+                break;
+            case 11:
+                monthInWord.push('Nov');
+                break;
+            case 12:
+                monthInWord.push('Dec');
+                break;
+        }
+    };
+    return monthInWord;
+}
+
+const joinDate = (input) => {
+    return dateInWordReturn(input)[0] + ' of ' + monthInWordReturn(input)[0] + ' and ' + dateInWordReturn(input)[1] + ' of ' + monthInWordReturn(input)[1];
+}
 
 const randomNumber = Math.floor(Math.random()*astrology.length);
 
@@ -105,21 +173,22 @@ const randomAstrologyFacts = (birthDate) => {
     if (birthDate === undefined) {
         for (let i = 0; i < astrology.length; i++) { // useing for loop to shorten the if statements
             if (randomNumber === i) {
-                console.log(`If you were born between ${astrology[i].dates}. Your astrological sign is ${astrology[i].dates}. Your astrological stone is ${astrology[i].stone}. The meaning associated with ${astrology[i].sign} is ${astrology[i].meaning}`);
+                return `If you were born between ${joinDate(i)}. Your astrological sign is ${astrology[i].sign}. Your astrological stone is ${astrology[i].stone}. The meaning associated with ${astrology[i].sign} is ${astrology[i].meaning}`;
             }
-        }
+        };
         //response for inorrect input, using Date.parse method, input is changed to milliseconds passed since midnight 1st jan 1970, if the input is incorrect, the method will return 0.
     } else if (Date.parse(birthDate) === 0) {
-        console.log("please enter a correct date in the format of 'YYYY,MM,DD'")
+        console.log("please enter a correct date in the format of 'YYYY/MM/DD'");
         //response for correct input, using if statement to check where the input is located within the astrology array
     } else {
+        birthDate = dateAndMonthReturn(birthDate);
+        birthDate.unshift(2021); //for comparison during the if stage, the year is changed.
         for (let j = 0; j < astrology.length; j++) { //using for loop to shorten the if statments
             if ((Date.parse(birthDate) >= astrology[j].startDate.getTime()) && (Date.parse(birthDate) <= astrology[j].endDate.getTime())) {
-                console.log(`Your astrological sign is ${astrology[j].sign}. Your astrological stone is ${astrology[j].stone}. The meaning associated with ${astrology[j].sign} is ${astrology[j].meaning}. People born between ${astrology[j].dates} will have the same astrological sign as yours!`)
+                return `Your astrological sign is ${astrology[j].sign}. Your astrological stone is ${astrology[j].stone}. The meaning associated with ${astrology[j].sign} is ${astrology[j].meaning}. People born between ${joinDate(j)} will have the same astrological sign as yours!`;
             }
-        }
-    }
-}
-console.log(astrology[0].startDate)
-let test = new Date('2019,06,12').toLocaleString()
-console.log(test.split('/'));
+        };
+    };
+};
+console.log(randomAstrologyFacts());
+
